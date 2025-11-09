@@ -1,0 +1,40 @@
+[gd_scene load_steps=7 format=3 uid="uid://cghyigon7243a"]
+
+[ext_resource type="Texture2D" uid="uid://bdh5y47e6qabs" path="res://icon.svg" id="1_80nbo"]
+[ext_resource type="PackedScene" uid="uid://ckt8gji3nlcye" path="res://player.tscn" id="3_feb5d"]
+[ext_resource type="PackedScene" uid="uid://tdrxyfe7tsyc" path="res://parallax_background.tscn" id="4_fc0e3"]
+[ext_resource type="Script" uid="uid://dt5aluvoe6xqu" path="res://game.gd" id="4_game_script"]
+[ext_resource type="Texture2D" uid="uid://b60ccfsk8uwe4" path="res://img/tv_ram.png" id="4_ryrav"]
+[ext_resource type="PackedScene" uid="uid://corkl2nlaf4hq" path="res://parallax_foreground.tscn" id="5_7jktm"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("4_game_script")
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(563, 448)
+texture = ExtResource("1_80nbo")
+
+[node name="Label" type="Label" parent="Icon"]
+offset_left = 69.0
+offset_top = -8.0
+offset_right = 435.0
+offset_bottom = 67.0
+text = "Space to jump (hold for bigger jump),  left to stomp,  right to speed up"
+
+[node name="player" parent="." instance=ExtResource("3_feb5d")]
+position = Vector2(95, 479)
+
+[node name="Camera2D" type="Camera2D" parent="player"]
+offset = Vector2(350, 0)
+
+[node name="ParallaxBackground" parent="." instance=ExtResource("4_fc0e3")]
+
+[node name="Parallaxforeground" parent="." instance=ExtResource("5_7jktm")]
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="TvRam" type="Sprite2D" parent="UILayer"]
+position = Vector2(500, 245)
+scale = Vector2(1.11217, 1.07848)
+texture = ExtResource("4_ryrav")

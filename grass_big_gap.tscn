@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=4 uid="uid://0xh2hbcifpaj"]
+
+[ext_resource type="Texture2D" uid="uid://dpdokbhvluh73" path="res://img/grass_tile.png" id="1_big_gap"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_big_gap"]
+texture = ExtResource("1_big_gap")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+
+[sub_resource type="TileSet" id="TileSet_big_gap"]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 2
+physics_layer_0/collision_mask = 0
+sources/0 = SubResource("TileSetAtlasSource_big_gap")
+
+[node name="TileMapLayer" type="TileMapLayer"]
+tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAAJAAAAAAAAAAAAAAALAAAAAAAAAAAAAAANAAAAAAAAAAAAAAAOAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_big_gap")

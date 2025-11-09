@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://ctos3hk6hda38"]
+
+[ext_resource type="Script" uid="uid://dwr1mcmhtaij1" path="res://bounce_enemy.gd" id="1_4gyqm"]
+[ext_resource type="Texture2D" uid="uid://dpdokbhvluh73" path="res://img/grass_tile.png" id="1_7k104"]
+[ext_resource type="Texture2D" uid="uid://lhkl4jq7n8wf" path="res://img/baloon.png" id="3_qi2p4"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qi2p4"]
+radius = 18.0278
+
+[node name="enemy" type="Area2D"]
+collision_layer = 0
+script = ExtResource("1_4gyqm")
+
+[node name="Baloon" type="Sprite2D" parent="."]
+position = Vector2(0, 28.584)
+scale = Vector2(0.192143, 0.192143)
+texture = ExtResource("3_qi2p4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 17)
+shape = SubResource("CircleShape2D_qi2p4")
+
+[node name="GrassTile" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, 16)
+texture = ExtResource("1_7k104")
