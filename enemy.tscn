@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://ctos3hk6hda38"]
+[gd_scene load_steps=7 format=3 uid="uid://ctos3hk6hda38"]
 
 [ext_resource type="Script" uid="uid://dwr1mcmhtaij1" path="res://bounce_enemy.gd" id="1_4gyqm"]
 [ext_resource type="Texture2D" uid="uid://dpdokbhvluh73" path="res://img/grass_tile.png" id="1_7k104"]
 [ext_resource type="Texture2D" uid="uid://lhkl4jq7n8wf" path="res://img/baloon.png" id="3_qi2p4"]
+[ext_resource type="Texture2D" uid="uid://bv5kgqio7ynsr" path="res://img/duck_normal.png" id="4_iifgy"]
+[ext_resource type="Texture2D" uid="uid://clqr6qi5v3nvi" path="res://img/duck_squished.png" id="5_epg4t"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qi2p4"]
 radius = 18.0278
@@ -12,6 +14,7 @@ collision_layer = 0
 script = ExtResource("1_4gyqm")
 
 [node name="Baloon" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(0, 28.584)
 scale = Vector2(0.192143, 0.192143)
 texture = ExtResource("3_qi2p4")
@@ -24,3 +27,15 @@ shape = SubResource("CircleShape2D_qi2p4")
 visible = false
 position = Vector2(0, 16)
 texture = ExtResource("1_7k104")
+
+[node name="DuckNormal" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, 15)
+texture = ExtResource("4_iifgy")
+
+[node name="DuckSquished" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+position = Vector2(1, 6)
+scale = Vector2(1.32812, 1.32812)
+texture = ExtResource("5_epg4t")

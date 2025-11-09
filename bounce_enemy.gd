@@ -13,6 +13,10 @@ func _on_body_entered(body: Node2D) -> void:
 		var bounce_speed = - min(max(abs(player.velocity.y), 400 ), 700 ) # Make it negative (upward)
 		player.velocity.y = bounce_speed
 		
+		# Switch sprites: hide normal duck, show squished duck
+		$DuckNormal.visible = false
+		$DuckSquished.visible = true
+		
 		# Trigger screenshake for stomp
 		if player.has_method("trigger_stomp_shake"):
 			player.trigger_stomp_shake()
