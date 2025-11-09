@@ -45,8 +45,8 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	# Check for space key press to start game
-	if can_start_game and Input.is_action_just_pressed("ui_accept"):
+	# Check for jump input to start game
+	if can_start_game and Input.is_action_just_pressed("jump"):
 		switch_to_game()
 		return
 	

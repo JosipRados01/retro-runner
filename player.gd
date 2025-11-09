@@ -89,19 +89,21 @@ func _physics_process(delta: float) -> void:
 		# Automatic running to the right for endless runner
 		direction = 1.0
 		
-		# Allow player to slow down or move left temporarily
-		if Input.is_action_pressed("ui_left"):
-			direction = handle_left_input()
+		# Allow player to slow down or speed up
+		if Input.is_action_pressed("stomp"):
+			direction = handle_stomp_input()
 			update_animation_speed(false)  # Not running fast
-		elif Input.is_action_pressed("ui_right"):
+		elif Input.is_action_pressed("jump"):
 			direction = 1.5  # Speed boost
 			update_animation_speed(true)   # Running fast
 		else:
 			update_animation_speed(false)  # Normal speed
 	else:
 		# Manual movement (original behavior)
-		direction = Input.get_axis("ui_left", "ui_right")
-		update_animation_speed(abs(direction) > 1.0)  # Running fast if direction > 1.0
+		var stomp_input = -1.0 if Input.is_action_pressed("stomp") else 0.0
+		var speed_input = 1.0 if Input.is_action_pressed("jump") else 0.0
+		direction = stomp_input + speed_input
+		update_animation_speed(Input.is_action_pressed("jump"))  # Running fast if jump pressed
 	
 	if direction != 0:
 		velocity.x = direction * SPEED
@@ -112,7 +114,7 @@ func _physics_process(delta: float) -> void:
 
 func handle_jump(delta: float) -> void:
 	# Start jump with very small velocity (allow coyote time)
-	if Input.is_action_just_pressed("ui_accept") and can_jump() and not has_jumped:
+	if Input.is_action_just_pressed("jump") and can_jump() and not has_jumped:
 		velocity.y = MIN_JUMP_VELOCITY  # Start with very small jump
 		is_jumping = true
 		has_jumped = true
@@ -127,7 +129,7 @@ func handle_jump(delta: float) -> void:
 		print("Jump started with velocity: ", velocity.y)
 	
 	# Track jump time while button is held
-	if is_jumping and Input.is_action_pressed("ui_accept"):
+	if is_jumping and Input.is_action_pressed("jump"):
 		jump_time += delta
 		
 		# Only start boosting after a small delay to ensure tap vs hold distinction
@@ -139,7 +141,7 @@ func handle_jump(delta: float) -> void:
 			print("Boosting jump, velocity: ", velocity.y)
 	
 	# Stop boosting when button released or max time reached
-	if is_jumping and (Input.is_action_just_released("ui_accept") or jump_time >= MAX_JUMP_TIME):
+	if is_jumping and (Input.is_action_just_released("jump") or jump_time >= MAX_JUMP_TIME):
 		is_jumping = false
 		print("Jump ended, final velocity: ", velocity.y)
 	
@@ -202,8 +204,8 @@ func reset_jump_state():
 	disable_y_restart = true  # Disable y restart after bounce
 	y_restart_timer = Y_RESTART_DISABLE_TIME  # Start timer for re-enabling
 
-func handle_left_input() -> float:
-	# Handle left input logic with optional y restart and stomp slowdown
+func handle_stomp_input() -> float:
+	# Handle stomp input logic with optional y restart and stomp slowdown
 	
 	# Restart the y velocity if going up for more snappy controls (unless disabled)
 	if velocity.y < 0 and not disable_y_restart:
@@ -228,7 +230,7 @@ func update_animation_speed(running_fast: bool):
 
 func handle_stomp():
 	# Check if player should be stomping
-	var should_stomp = Input.is_action_pressed("ui_left") and not is_on_floor() and auto_run and velocity.y > 0
+	var should_stomp = Input.is_action_pressed("stomp") and not is_on_floor() and auto_run and velocity.y > 0
 	
 	# Start stomping
 	if should_stomp and not is_stomping:
@@ -236,8 +238,8 @@ func handle_stomp():
 		show_stomp_elements(true)
 		print("Started stomping")
 	
-	# Stop stomping when landing or releasing left key
-	elif is_stomping and (is_on_floor() or not Input.is_action_pressed("ui_left")):
+	# Stop stomping when landing or releasing stomp key
+	elif is_stomping and (is_on_floor() or not Input.is_action_pressed("stomp")):
 		is_stomping = false
 		show_stomp_elements(false)
 		print("Stopped stomping")

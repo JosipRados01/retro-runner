@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cghyigon7243a"]
+[gd_scene load_steps=8 format=3 uid="uid://cghyigon7243a"]
 
 [ext_resource type="Texture2D" uid="uid://bdh5y47e6qabs" path="res://icon.svg" id="1_80nbo"]
 [ext_resource type="PackedScene" uid="uid://ckt8gji3nlcye" path="res://player.tscn" id="3_feb5d"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://dt5aluvoe6xqu" path="res://game.gd" id="4_game_script"]
 [ext_resource type="Texture2D" uid="uid://b60ccfsk8uwe4" path="res://img/tv_ram.png" id="4_ryrav"]
 [ext_resource type="PackedScene" uid="uid://corkl2nlaf4hq" path="res://parallax_foreground.tscn" id="5_7jktm"]
+[ext_resource type="PackedScene" path="res://touch_controls.tscn" id="6_touch"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("4_game_script")
@@ -19,7 +20,7 @@ offset_left = 69.0
 offset_top = -8.0
 offset_right = 435.0
 offset_bottom = 67.0
-text = "Space to jump (hold for bigger jump),  left to stomp,  right to speed up"
+text = "Space/Blue to jump & speed up (hold for bigger jump), Red to stomp"
 
 [node name="ParallaxBackground" parent="." instance=ExtResource("4_fc0e3")]
 
@@ -39,3 +40,7 @@ layer = 10
 position = Vector2(500, 245)
 scale = Vector2(1.11217, 1.07848)
 texture = ExtResource("4_ryrav")
+
+[node name="TouchControls" parent="UILayer" instance=ExtResource("6_touch")]
+grow_horizontal = 2
+grow_vertical = 2
