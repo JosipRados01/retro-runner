@@ -1,22 +1,30 @@
 [gd_scene load_steps=2 format=3 uid="uid://corkl2nlaf4hq"]
 
-[ext_resource type="Texture2D" uid="uid://dontu4ub0yey7" path="res://img/background/bad_road.png" id="1_2dssp"]
+[ext_resource type="Texture2D" uid="uid://dx0fpbyx1iiy7" path="res://img/background/okayRoad.png" id="1_2dssp"]
 
 [node name="ParallaxBackground" type="ParallaxBackground"]
 offset = Vector2(0, 450)
 transform = Transform2D(1, 0, 0, 1, 0, 450)
 
 [node name="ForegroundLayer" type="ParallaxLayer" parent="."]
-scale = Vector2(1.5, 1.5)
+z_index = 100
 motion_scale = Vector2(1.2, 1)
 motion_offset = Vector2(0, 198)
-motion_mirroring = Vector2(1350, 0)
+motion_mirroring = Vector2(384, 0)
 
 [node name="OrangeSky" type="Sprite2D" parent="ForegroundLayer"]
+z_index = 100
 texture = ExtResource("1_2dssp")
 centered = false
 
 [node name="OrangeSky2" type="Sprite2D" parent="ForegroundLayer"]
-position = Vector2(900, 0)
+z_index = 100
+position = Vector2(384, 0)
+texture = ExtResource("1_2dssp")
+centered = false
+
+[node name="OrangeSky3" type="Sprite2D" parent="ForegroundLayer"]
+z_index = 100
+position = Vector2(768, 0)
 texture = ExtResource("1_2dssp")
 centered = false

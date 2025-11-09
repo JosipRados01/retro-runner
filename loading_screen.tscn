@@ -29,7 +29,6 @@ texture = ExtResource("3_pa1l2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Tv_ram/Area2D"]
 position = Vector2(-1.01652, 3.99485)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_74xf4")
 
 [node name="TvOn" type="Sprite2D" parent="."]

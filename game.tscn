@@ -21,15 +21,16 @@ offset_right = 435.0
 offset_bottom = 67.0
 text = "Space to jump (hold for bigger jump),  left to stomp,  right to speed up"
 
+[node name="ParallaxBackground" parent="." instance=ExtResource("4_fc0e3")]
+
 [node name="player" parent="." instance=ExtResource("3_feb5d")]
 position = Vector2(95, 479)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 offset = Vector2(350, 0)
 
-[node name="ParallaxBackground" parent="." instance=ExtResource("4_fc0e3")]
-
 [node name="Parallaxforeground" parent="." instance=ExtResource("5_7jktm")]
+layer = -1
 
 [node name="UILayer" type="CanvasLayer" parent="."]
 layer = 10

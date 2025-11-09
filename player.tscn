@@ -73,7 +73,7 @@ texture = ExtResource("2_onrkg")
 unique_name_in_owner = true
 position = Vector2(0, -31)
 sprite_frames = SubResource("SpriteFrames_dw050")
-frame_progress = 0.796523
+frame_progress = 0.172846
 
 [node name="JumpParticle" type="CPUParticles2D" parent="."]
 position = Vector2(-7, -21)

@@ -119,6 +119,9 @@ func generate_specific_section(scene: PackedScene):
 	new_section.global_position.x = next_spawn_x
 	new_section.global_position.y = ground_level
 	
+	# Set z_index to render in front of player and parallax foreground
+	new_section.z_index = 200
+	
 	# Add to scene
 	add_child(new_section)
 	
