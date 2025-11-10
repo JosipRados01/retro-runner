@@ -22,7 +22,7 @@ extends Node2D
 
 # Tracking variables
 var active_sections: Array[Node2D] = []
-var next_spawn_x: float = 0.0
+var next_spawn_x: float = -400.0
 var last_player_x: float = 0.0
 
 # Called when the node enters the scene tree for the first time.

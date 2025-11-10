@@ -28,7 +28,8 @@ var initial_scale: Vector2
 var target_scale: Vector2
 var total_animation_time: float
 var initial_position: Vector2
-var zoom_target_y: float = 160.0
+var zoom_target_y: float = 150.0
+var zoom_target_x: float = 480.0  # Target x coordinate to zoom into
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -92,11 +93,12 @@ func update_zoom(delta: float):
 	# Smoothly interpolate between initial and target scale
 	var current_scale = initial_scale.lerp(target_scale, zoom_progress)
 	
-	# Calculate position offset to zoom into y=200
-	# As we zoom in, we need to move the sprite up to keep y=200 centered
+	# Calculate position offset to zoom into specific x,y coordinates
+	# As we zoom in, we need to move the sprite to keep the target coordinates centered
 	var scale_factor = current_scale.y / initial_scale.y
 	var y_offset = (initial_position.y - zoom_target_y) * (scale_factor - 1.0)
-	var target_position = Vector2(initial_position.x, initial_position.y - y_offset)
+	var x_offset = (initial_position.x - zoom_target_x) * (scale_factor - 1.0)
+	var target_position = Vector2(initial_position.x - x_offset, initial_position.y - y_offset)
 	
 	# Apply the scale and position to all TV sprites
 	tv_on.scale = current_scale
