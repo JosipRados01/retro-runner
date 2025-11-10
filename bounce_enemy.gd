@@ -17,6 +17,9 @@ func _on_body_entered(body: Node2D) -> void:
 		$DuckNormal.visible = false
 		$DuckSquished.visible = true
 		
+		# Trigger splash particles
+		%splash.emitting = true
+		
 		# Trigger screenshake for stomp
 		if player.has_method("trigger_stomp_shake"):
 			player.trigger_stomp_shake()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://ctos3hk6hda38"]
+[gd_scene load_steps=8 format=3 uid="uid://ctos3hk6hda38"]
 
 [ext_resource type="Script" uid="uid://dwr1mcmhtaij1" path="res://bounce_enemy.gd" id="1_4gyqm"]
 [ext_resource type="Texture2D" uid="uid://dpdokbhvluh73" path="res://img/grass_tile.png" id="1_7k104"]
@@ -8,6 +8,9 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qi2p4"]
 radius = 18.0278
+
+[sub_resource type="Gradient" id="Gradient_epg4t"]
+colors = PackedColorArray(0, 0, 0.937255, 1, 1, 1, 1, 1)
 
 [node name="enemy" type="Area2D"]
 collision_layer = 0
@@ -27,6 +30,25 @@ shape = SubResource("CircleShape2D_qi2p4")
 visible = false
 position = Vector2(0, 16)
 texture = ExtResource("1_7k104")
+
+[node name="splash" type="CPUParticles2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(-1, 32)
+emitting = false
+amount = 80
+lifetime = 0.93
+one_shot = true
+explosiveness = 0.9
+emission_shape = 3
+emission_rect_extents = Vector2(20, 1)
+direction = Vector2(0.1, -1)
+spread = 26.24
+initial_velocity_min = 540.42
+initial_velocity_max = 540.42
+scale_amount_min = 2.0
+scale_amount_max = 3.0
+color = Color(0.14902, 0.694118, 1, 1)
+color_initial_ramp = SubResource("Gradient_epg4t")
 
 [node name="DuckNormal" type="Sprite2D" parent="."]
 texture_filter = 1

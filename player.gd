@@ -39,11 +39,18 @@ var original_camera_position = Vector2.ZERO
 func _ready() -> void:
 	%animation.play()
 	
-	# Initially hide stomp elements and show normal elements
+	# Initially hide stomp elements and jump animation, show normal elements
 	if has_node("stomp_sprite"):
 		$stomp_sprite.visible = false
 	if has_node("stomp_collision"):
 		$stomp_collision.disabled = true
+	
+	# Initially hide jump animation
+	%jumpAnimation.visible = false
+	
+	# Initialize run particles (should start disabled)
+	if has_node("runParticle"):
+		$runParticle.emitting = false
 	
 	# Ensure normal collision is enabled initially
 	if has_node("CollisionShape2D"):
@@ -82,6 +89,9 @@ func _physics_process(delta: float) -> void:
 		
 		velocity += get_gravity() * gravity_multiplier * delta
 
+	# Update animation state
+	update_animation_state()
+
 	# Handle movement
 	var direction := 0.0
 	
@@ -109,6 +119,9 @@ func _physics_process(delta: float) -> void:
 		velocity.x = direction * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
+
+	# Handle run particles
+	handle_run_particles()
 
 	move_and_slide()
 
@@ -155,7 +168,6 @@ func handle_jump(delta: float) -> void:
 		# Stop stomping when landing
 		if is_stomping:
 			is_stomping = false
-			show_stomp_elements(false)
 
 func update_coyote_time(delta: float) -> void:
 	# Track if we were on floor last frame
@@ -235,27 +247,35 @@ func handle_stomp():
 	# Start stomping
 	if should_stomp and not is_stomping:
 		is_stomping = true
-		show_stomp_elements(true)
 		print("Started stomping")
 	
 	# Stop stomping when landing or releasing stomp key
 	elif is_stomping and (is_on_floor() or not Input.is_action_pressed("stomp")):
 		is_stomping = false
-		show_stomp_elements(false)
 		print("Stopped stomping")
 
-func show_stomp_elements(show: bool):
-	if show:
-		# Show stomp elements, hide normal elements
-		%StompSprite.visible = true
-		$StompCollisionShape.disabled = false
-		%animation.visible = false
-		$regularCollisionShape.disabled = true
-	else:
-		%StompSprite.visible = false
-		$StompCollisionShape.disabled = true
-		%animation.visible = true
-		$regularCollisionShape.disabled = false
+func update_animation_state():
+	# Determine which animation should be active based on player state
+	var should_show_stomp = is_stomping
+	var should_show_jump = not is_on_floor() and not is_stomping
+	var should_show_running = is_on_floor() and not is_stomping
+	
+	# Update stomp animation
+	%StompSprite.visible = should_show_stomp
+	$StompCollisionShape.disabled = not should_show_stomp
+	
+	# Update jump animation
+	%jumpAnimation.visible = should_show_jump
+	if should_show_jump and not %jumpAnimation.is_playing():
+		%jumpAnimation.play()
+	
+	# Update running animation
+	%animation.visible = should_show_running
+	if should_show_running and not %animation.is_playing():
+		%animation.play()
+	
+	# Update collision shape - use stomp collision when stomping, regular otherwise
+	$regularCollisionShape.disabled = should_show_stomp
 
 func add_screenshake(intensity: float, duration: float):
 	# Add screenshake effect
@@ -286,3 +306,20 @@ func update_screenshake(delta: float):
 func trigger_stomp_shake():
 	# Trigger screenshake for enemy stomp
 	add_screenshake(5.0, 0.2)  # Stronger shake for stomp
+
+func handle_run_particles():
+	# Handle run particles - emit while holding jump input (speed boost)
+	var should_emit_run_particles = Input.is_action_pressed("jump")
+	
+	if has_node("runParticle"):
+		var run_particle = $runParticle
+		
+		# Start emitting particles when conditions are met
+		if should_emit_run_particles and not run_particle.emitting:
+			run_particle.emitting = true
+			print("Started run particles")
+		
+		# Stop emitting particles when conditions are no longer met
+		elif not should_emit_run_particles and run_particle.emitting:
+			run_particle.emitting = false
+			print("Stopped run particles")
