@@ -28,7 +28,7 @@ text = "Space/Blue to jump & speed up (hold for bigger jump), Red to stomp"
 position = Vector2(95, 479)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
-offset = Vector2(350, 0)
+offset = Vector2(300, 0)
 
 [node name="Parallaxforeground" parent="." instance=ExtResource("5_7jktm")]
 layer = -1
