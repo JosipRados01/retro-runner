@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cghyigon7243a"]
+[gd_scene load_steps=9 format=3 uid="uid://cghyigon7243a"]
 
 [ext_resource type="Texture2D" uid="uid://bdh5y47e6qabs" path="res://icon.svg" id="1_80nbo"]
 [ext_resource type="PackedScene" uid="uid://ckt8gji3nlcye" path="res://player.tscn" id="3_feb5d"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://dt5aluvoe6xqu" path="res://game.gd" id="4_game_script"]
 [ext_resource type="Texture2D" uid="uid://b60ccfsk8uwe4" path="res://img/tv_ram.png" id="4_ryrav"]
 [ext_resource type="PackedScene" uid="uid://corkl2nlaf4hq" path="res://parallax_foreground.tscn" id="5_7jktm"]
+[ext_resource type="PackedScene" uid="uid://bytosd06cehgd" path="res://crt_effect.tscn" id="6_j5wjh"]
 [ext_resource type="PackedScene" path="res://touch_controls.tscn" id="6_touch"]
 
 [node name="Game" type="Node2D"]
@@ -35,6 +36,12 @@ layer = -1
 
 [node name="UILayer" type="CanvasLayer" parent="."]
 layer = 10
+
+[node name="CRTEffect" parent="UILayer" instance=ExtResource("6_j5wjh")]
+layer = 9
+offset = Vector2(16, 29)
+scale = Vector2(23, 10)
+transform = Transform2D(23, 0, 0, 10, 16, 29)
 
 [node name="TvRam" type="Sprite2D" parent="UILayer"]
 position = Vector2(500, 245)

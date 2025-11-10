@@ -16,8 +16,8 @@ extends Node2D
 
 # Camera settings
 @export var camera_follow_speed: float = 9.0  # How fast camera follows player vertically
-@export var camera_y_min: float = 300.0  # Top boundary for camera panning
-@export var camera_y_max: float = 800.0  # Bottom boundary for camera panning
+@export var camera_y_min: float = 200.0  # Top boundary for camera panning
+@export var camera_y_max: float = 700.0  # Bottom boundary for camera panning
 @export var camera_vertical_range: float = 200.0  # How much the camera can pan up/down
 
 # Tracking variables
