@@ -282,11 +282,11 @@ func animate_combo_label(combo_count: int):
 	
 	# Calculate scale based on combo count - bigger combos = bigger scale
 	var base_scale = 1.0
-	var max_scale = base_scale + (0.15 * combo_count)  # Increases by 0.15 per combo
+	var max_scale = base_scale + (0.15 * combo_count )  # Increases by 0.15 per combo
 	max_scale = min(max_scale, 2.0)  # Cap at 2.0 to prevent too large scaling
 	
 	# Scale animation: scale up based on combo count, then back to base
-	var scale_up_duration = 0.1 + (combo_count * 0.02)  # Slightly longer animation for bigger combos
+	var scale_up_duration = 0.04 + (combo_count * 0.02)  # Slightly longer animation for bigger combos
 	var scale_down_duration = 0.15 + (combo_count * 0.03)
 	
 	# Calculate position offset to keep scaling centered
@@ -305,20 +305,3 @@ func animate_combo_label(combo_count: int):
 	# Scale back down and return to original position
 	combo_tween.tween_property(combo_label, "scale", Vector2(base_scale, base_scale), scale_down_duration).set_delay(scale_up_duration)
 	combo_tween.tween_property(combo_label, "position", combo_original_position, scale_down_duration).set_delay(scale_up_duration)
-	
-	# Shake animation: more intense shake for bigger combos
-	var shake_strength = 1.0 + (combo_count * 1.5)  # Increases shake with combo
-	shake_strength = min(shake_strength, 12.0)  # Cap shake strength
-	var shake_duration = 0.2 + (combo_count * 0.05)  # Longer shake for bigger combos
-	var shake_steps = 2 + combo_count  # More shake steps for bigger combos
-	
-	for i in range(shake_steps):
-		var random_offset = Vector2(
-			randf_range(-shake_strength, shake_strength),
-			randf_range(-shake_strength, shake_strength)
-		)
-		var step_delay = (shake_duration / shake_steps) * i
-		combo_tween.tween_property(combo_label, "position", combo_original_position + random_offset, 0.02).set_delay(step_delay)
-	
-	# Return to original position
-	combo_tween.tween_property(combo_label, "position", combo_original_position, 0.05).set_delay(shake_duration)

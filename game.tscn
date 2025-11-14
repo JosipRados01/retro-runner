@@ -1,6 +1,5 @@
-[gd_scene load_steps=10 format=3 uid="uid://cghyigon7243a"]
+[gd_scene load_steps=9 format=3 uid="uid://cghyigon7243a"]
 
-[ext_resource type="Texture2D" uid="uid://bdh5y47e6qabs" path="res://icon.svg" id="1_80nbo"]
 [ext_resource type="PackedScene" uid="uid://ckt8gji3nlcye" path="res://player.tscn" id="3_feb5d"]
 [ext_resource type="PackedScene" uid="uid://tdrxyfe7tsyc" path="res://parallax_background.tscn" id="4_fc0e3"]
 [ext_resource type="Script" uid="uid://dt5aluvoe6xqu" path="res://game.gd" id="4_game_script"]
@@ -8,27 +7,20 @@
 [ext_resource type="PackedScene" uid="uid://corkl2nlaf4hq" path="res://parallax_foreground.tscn" id="5_7jktm"]
 [ext_resource type="PackedScene" uid="uid://bytosd06cehgd" path="res://crt_effect.tscn" id="6_j5wjh"]
 [ext_resource type="PackedScene" path="res://touch_controls.tscn" id="6_touch"]
-
-[sub_resource type="SystemFont" id="SystemFont_1"]
-font_names = PackedStringArray("Courier New", "Monaco", "Menlo", "Consolas", "monospace")
-font_weight = 700
-antialiasing = 0
-hinting = 0
-subpixel_positioning = 0
+[ext_resource type="FontFile" uid="uid://csbfid7i45dlr" path="res://Retro Gaming.ttf" id="9_vef74"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("4_game_script")
 
-[node name="Icon" type="Sprite2D" parent="."]
-position = Vector2(563, 448)
-texture = ExtResource("1_80nbo")
-
-[node name="Label" type="Label" parent="Icon"]
-offset_left = 69.0
-offset_top = -8.0
-offset_right = 435.0
-offset_bottom = 67.0
-text = "Space/Blue to jump & speed up (hold for bigger jump), Red to stomp"
+[node name="tutorial text" type="Label" parent="."]
+offset_left = 332.0
+offset_top = 442.0
+offset_right = 736.0
+offset_bottom = 523.0
+theme_override_fonts/font = ExtResource("9_vef74")
+theme_override_font_sizes/font_size = 30
+text = "Space - Jump & Boost
+Down - Stomp"
 
 [node name="ParallaxBackground" parent="." instance=ExtResource("4_fc0e3")]
 
@@ -71,11 +63,11 @@ mouse_filter = 2
 [node name="ScoreLabel" type="Label" parent="UILayer/ScoreUI"]
 layout_mode = 1
 offset_left = 63.0
-offset_top = 46.0
+offset_top = 50.0
 offset_right = 263.0
-offset_bottom = 96.0
+offset_bottom = 100.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = SubResource("SystemFont_1")
+theme_override_fonts/font = ExtResource("9_vef74")
 theme_override_font_sizes/font_size = 20
 text = "SCORE: 0"
 
@@ -85,12 +77,12 @@ anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -308.0
-offset_top = 48.0
+offset_top = 50.0
 offset_right = -68.0
-offset_bottom = 98.0
+offset_bottom = 100.0
 grow_horizontal = 0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = SubResource("SystemFont_1")
+theme_override_fonts/font = ExtResource("9_vef74")
 theme_override_font_sizes/font_size = 20
 text = "HIGHSCORE: 0"
 horizontal_alignment = 2
@@ -100,12 +92,12 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -92.0
-offset_top = 101.0
-offset_right = 108.0
-offset_bottom = 151.0
+offset_left = -106.0
+offset_top = 54.0
+offset_right = 94.0
+offset_bottom = 104.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = SubResource("SystemFont_1")
+theme_override_fonts/font = ExtResource("9_vef74")
 theme_override_font_sizes/font_size = 18
 horizontal_alignment = 1
