@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://78sbfbha0cig"]
+[gd_scene load_steps=8 format=3 uid="uid://78sbfbha0cig"]
 
 [ext_resource type="Texture2D" uid="uid://bvi7yxcds0g0x" path="res://img/background/tv_on.png" id="1_htrc2"]
 [ext_resource type="Script" uid="uid://cvhmspx4h4exh" path="res://loading_screen.gd" id="1_weff3"]
 [ext_resource type="Texture2D" uid="uid://e0w75a2imcg" path="res://img/background/blueSky.png" id="2_74xf4"]
 [ext_resource type="Texture2D" uid="uid://c6lcu04txfpa5" path="res://img/background/tv_off.png" id="2_weff3"]
 [ext_resource type="Texture2D" uid="uid://ccqh073skjo50" path="res://img/tv_empty.png" id="3_pa1l2"]
+[ext_resource type="PackedScene" uid="uid://bytosd06cehgd" path="res://crt_effect.tscn" id="6_pa1l2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_74xf4"]
 size = Vector2(52.0857, 24.0984)
@@ -44,3 +45,8 @@ texture_filter = 1
 position = Vector2(501.5, 267.75)
 scale = Vector2(8.352, 8.352)
 texture = ExtResource("2_weff3")
+
+[node name="CRTEffect" parent="." instance=ExtResource("6_pa1l2")]
+offset = Vector2(275, 200)
+scale = Vector2(11, 5.3)
+transform = Transform2D(11, 0, 0, 5.3, 275, 200)

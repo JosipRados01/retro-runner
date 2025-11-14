@@ -21,6 +21,7 @@ var has_jumped = false  # Prevents double jumping
 # Coyote time variables
 var coyote_timer = 0.0
 var was_on_floor = false
+var was_on_floor_last_frame = false  # For combo landing detection
 
 # Stomp variables
 var is_stomping = false
@@ -160,6 +161,10 @@ func handle_jump(delta: float) -> void:
 	
 	# Reset jump state when landing
 	if is_on_floor():
+		# Detect landing (was in air, now on ground)
+		if not was_on_floor_last_frame:
+			ScoreSystem.on_player_landed()
+		
 		has_jumped = false
 		disable_y_restart = false  # Reset y restart disable when landing
 		y_restart_timer = 0.0  # Reset timer when landing
@@ -168,6 +173,9 @@ func handle_jump(delta: float) -> void:
 		# Stop stomping when landing
 		if is_stomping:
 			is_stomping = false
+	
+	# Update landing detection for next frame
+	was_on_floor_last_frame = is_on_floor()
 
 func update_coyote_time(delta: float) -> void:
 	# Track if we were on floor last frame

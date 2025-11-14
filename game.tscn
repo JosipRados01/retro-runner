@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cghyigon7243a"]
+[gd_scene load_steps=10 format=3 uid="uid://cghyigon7243a"]
 
 [ext_resource type="Texture2D" uid="uid://bdh5y47e6qabs" path="res://icon.svg" id="1_80nbo"]
 [ext_resource type="PackedScene" uid="uid://ckt8gji3nlcye" path="res://player.tscn" id="3_feb5d"]
@@ -8,6 +8,13 @@
 [ext_resource type="PackedScene" uid="uid://corkl2nlaf4hq" path="res://parallax_foreground.tscn" id="5_7jktm"]
 [ext_resource type="PackedScene" uid="uid://bytosd06cehgd" path="res://crt_effect.tscn" id="6_j5wjh"]
 [ext_resource type="PackedScene" path="res://touch_controls.tscn" id="6_touch"]
+
+[sub_resource type="SystemFont" id="SystemFont_1"]
+font_names = PackedStringArray("Courier New", "Monaco", "Menlo", "Consolas", "monospace")
+font_weight = 700
+antialiasing = 0
+hinting = 0
+subpixel_positioning = 0
 
 [node name="Game" type="Node2D"]
 script = ExtResource("4_game_script")
@@ -51,3 +58,54 @@ texture = ExtResource("4_ryrav")
 [node name="TouchControls" parent="UILayer" instance=ExtResource("6_touch")]
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="ScoreUI" type="Control" parent="UILayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ScoreLabel" type="Label" parent="UILayer/ScoreUI"]
+layout_mode = 1
+offset_left = 63.0
+offset_top = 46.0
+offset_right = 263.0
+offset_bottom = 96.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = SubResource("SystemFont_1")
+theme_override_font_sizes/font_size = 20
+text = "SCORE: 0"
+
+[node name="HighScoreLabel" type="Label" parent="UILayer/ScoreUI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -308.0
+offset_top = 48.0
+offset_right = -68.0
+offset_bottom = 98.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = SubResource("SystemFont_1")
+theme_override_font_sizes/font_size = 20
+text = "HIGHSCORE: 0"
+horizontal_alignment = 2
+
+[node name="ComboLabel" type="Label" parent="UILayer/ScoreUI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -92.0
+offset_top = 101.0
+offset_right = 108.0
+offset_bottom = 151.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = SubResource("SystemFont_1")
+theme_override_font_sizes/font_size = 18
+horizontal_alignment = 1

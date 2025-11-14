@@ -28,4 +28,7 @@ func _on_body_entered(body: Node2D) -> void:
 		if player.has_method("reset_jump_state"):
 			player.reset_jump_state()
 		
+		# Add to combo system
+		ScoreSystem.on_duck_jump()
+		
 		print("Player bounced with velocity: ", bounce_speed)

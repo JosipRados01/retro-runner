@@ -6,6 +6,16 @@ extends Node2D
 # Reference to the player
 @onready var player: CharacterBody2D = $player
 @onready var camera: Camera2D = $player/Camera2D
+@onready var score_label: Label = $UILayer/ScoreUI/ScoreLabel
+@onready var highscore_label: Label = $UILayer/ScoreUI/HighScoreLabel
+@onready var combo_label: Label = $UILayer/ScoreUI/ComboLabel
+
+# Animation variables
+var combo_tween: Tween
+var combo_original_position: Vector2
+
+# Score system reference (assuming it's set as a global/autoload)
+var score_system
 
 # Generation settings
 @export var section_width: float = 480.0  # Width of each tile section
@@ -16,14 +26,18 @@ extends Node2D
 
 # Camera settings
 @export var camera_follow_speed: float = 9.0  # How fast camera follows player vertically
-@export var camera_y_min: float = 200.0  # Top boundary for camera panning
-@export var camera_y_max: float = 700.0  # Bottom boundary for camera panning
+@export var camera_y_min: float = 300.0  # Top boundary for camera panning
+@export var camera_y_max: float = 800.0  # Bottom boundary for camera panning
 @export var camera_vertical_range: float = 200.0  # How much the camera can pan up/down
 
 # Tracking variables
 var active_sections: Array[Node2D] = []
 var next_spawn_x: float = -400.0
 var last_player_x: float = 0.0
+
+# Difficulty progression variables
+var game_time: float = 0.0
+var basic_scenes_removed: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -54,9 +68,19 @@ func _ready() -> void:
 	
 	# Generate initial sections
 	generate_initial_sections()
+	
+	# Initialize score system
+	setup_score_system()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+	# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	# Update game time and check for difficulty progression
+	game_time += delta
+	if not basic_scenes_removed and game_time >= 60.0:  # 1 minute
+		remove_basic_scenes()
+		basic_scenes_removed = true
+		print("Difficulty progression: Basic scenes removed for easier combos!")
+	
 	if player:
 		var player_x = player.global_position.x
 		var player_y = player.global_position.y
@@ -149,12 +173,83 @@ func cleanup_old_sections(player_x: float):
 		print("Cleaned up section at x: ", section.global_position.x)
 
 func player_died():
-	print("Player died! Reloading scene...")
+	print("Player died! Final score: ", ScoreSystem.get_score())
 	reset_game()
 
 func reset_game():
+	# Reset score system before reloading
+	ScoreSystem.reset_score()
+	
 	# Reload the current scene completely
 	get_tree().reload_current_scene()
+
+func setup_score_system():
+	# Get reference to the global score system
+	score_system = ScoreSystem
+	
+	if score_system:
+		# Set the player reference in the score system
+		score_system.set_player(player)
+		
+		# Connect to score signals if you want to update UI
+		score_system.score_changed.connect(_on_score_changed)
+		score_system.distance_changed.connect(_on_distance_changed)
+		score_system.highscore_changed.connect(_on_highscore_changed)
+		score_system.combo_changed.connect(_on_combo_changed)
+		
+		# Initialize the score displays
+		_on_score_changed(score_system.get_score())
+		_on_highscore_changed(score_system.get_highscore())
+		_on_combo_changed(score_system.get_combo_count(), score_system.get_combo_points())
+		
+		# Store original combo label position for shake animation
+		if combo_label:
+			combo_original_position = combo_label.position
+		
+		print("Score system connected successfully")
+	else:
+		print("Warning: Score system not found as global/autoload")
+
+func _on_score_changed(new_score: int):
+	print("Score updated: ", new_score)
+	# Update the score label with SCORE: prefix and actual number (no padding)
+	if score_label:
+		score_label.text = "SCORE: " + str(new_score)
+
+func _on_highscore_changed(new_highscore: int):
+	print("High score updated: ", new_highscore)
+	# Update the high score label with HIGH: prefix and actual number (no padding)
+	if highscore_label:
+		highscore_label.text = "HIGHSCORE: " + str(new_highscore)
+
+func _on_combo_changed(combo_count: int, combo_points: int):
+	# Update the combo label
+	if combo_label:
+		if combo_count > 0:
+			combo_label.text = "COMBO x" + str(combo_count) + " (" + str(combo_points) + " pts)"
+			# Animate the combo label when combo increases
+			animate_combo_label(combo_count)
+		else:
+			combo_label.text = ""
+
+func _on_distance_changed(new_distance: float):
+	# You can use this to update distance display if needed
+	pass
+
+func remove_basic_scenes():
+	# Remove basic scenes that don't have duck bounces to make combos easier
+	var scenes_to_remove = []
+	
+	for scene in tilemap_scenes:
+		var scene_path = scene.resource_path
+		if "10grass.tscn" in scene_path or "grass_gap.tscn" in scene_path or "grass_two_small_gaps.tscn" in scene_path:
+			scenes_to_remove.append(scene)
+	
+	for scene in scenes_to_remove:
+		tilemap_scenes.erase(scene)
+		print("Removed scene: ", scene.resource_path)
+	
+	print("Basic scenes removed. Remaining scenes: ", tilemap_scenes.size())
 
 func update_camera_position(player_y: float, delta: float):
 	if not camera:
@@ -172,3 +267,58 @@ func update_camera_position(player_y: float, delta: float):
 	var current_offset = camera.offset
 	current_offset.y = lerp(current_offset.y, target_y_offset, camera_follow_speed * delta)
 	camera.offset = current_offset
+
+func animate_combo_label(combo_count: int):
+	if not combo_label:
+		return
+	
+	# Kill existing tween if running
+	if combo_tween:
+		combo_tween.kill()
+	
+	# Create new tween
+	combo_tween = create_tween()
+	combo_tween.set_parallel(true)  # Allow multiple animations at once
+	
+	# Calculate scale based on combo count - bigger combos = bigger scale
+	var base_scale = 1.0
+	var max_scale = base_scale + (0.15 * combo_count)  # Increases by 0.15 per combo
+	max_scale = min(max_scale, 2.0)  # Cap at 2.0 to prevent too large scaling
+	
+	# Scale animation: scale up based on combo count, then back to base
+	var scale_up_duration = 0.1 + (combo_count * 0.02)  # Slightly longer animation for bigger combos
+	var scale_down_duration = 0.15 + (combo_count * 0.03)
+	
+	# Calculate position offset to keep scaling centered
+	# When scaling, the label grows from top-left, so we need to offset it back to center
+	var label_size = combo_label.size
+	var scale_offset = Vector2(
+		(label_size.x * (max_scale - 1.0)) * -0.5,  # Move left by half the extra width
+		(label_size.y * (max_scale - 1.0)) * -0.5   # Move up by half the extra height
+	)
+	var scaled_position = combo_original_position + scale_offset
+	
+	# Animate scale and position together for centered scaling
+	combo_tween.tween_property(combo_label, "scale", Vector2(max_scale, max_scale), scale_up_duration)
+	combo_tween.tween_property(combo_label, "position", scaled_position, scale_up_duration)
+	
+	# Scale back down and return to original position
+	combo_tween.tween_property(combo_label, "scale", Vector2(base_scale, base_scale), scale_down_duration).set_delay(scale_up_duration)
+	combo_tween.tween_property(combo_label, "position", combo_original_position, scale_down_duration).set_delay(scale_up_duration)
+	
+	# Shake animation: more intense shake for bigger combos
+	var shake_strength = 1.0 + (combo_count * 1.5)  # Increases shake with combo
+	shake_strength = min(shake_strength, 12.0)  # Cap shake strength
+	var shake_duration = 0.2 + (combo_count * 0.05)  # Longer shake for bigger combos
+	var shake_steps = 2 + combo_count  # More shake steps for bigger combos
+	
+	for i in range(shake_steps):
+		var random_offset = Vector2(
+			randf_range(-shake_strength, shake_strength),
+			randf_range(-shake_strength, shake_strength)
+		)
+		var step_delay = (shake_duration / shake_steps) * i
+		combo_tween.tween_property(combo_label, "position", combo_original_position + random_offset, 0.02).set_delay(step_delay)
+	
+	# Return to original position
+	combo_tween.tween_property(combo_label, "position", combo_original_position, 0.05).set_delay(shake_duration)
