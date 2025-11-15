@@ -42,6 +42,7 @@ func play_pickup_sound():
 	if sfx_player:
 		sfx_player.stream = pickup_sound_stream
 		sfx_player.pitch_scale = randf_range(1.2, 1.8)  # Higher pitch for pickup sound
+		sfx_player.volume_db = -5.0  # Lower volume for pickup sound
 		sfx_player.play()
 		print("Pickup sound played")
 
