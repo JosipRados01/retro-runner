@@ -38,6 +38,9 @@ func _on_body_entered(body):
 		if hover_tween:
 			hover_tween.kill()
 		
+		# Play pickup sound effect
+		MusicManager.play_pickup_sound()
+		
 		# Add points to the score system
 		ScoreSystem.add_collectible_points(POINTS)
 		print("Disketa collected! +", POINTS, " points")
