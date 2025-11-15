@@ -137,6 +137,22 @@ func add_bonus_points(points: int) -> void:
 	
 	print("Bonus points added: ", points, " | Total score: ", current_score)
 
+# Add collectible points (disketa, DVD, ploca, etc.)
+func add_collectible_points(points: int) -> void:
+	combo_score += points
+	# Update total score (distance + combo points)
+	current_score = distance_score + combo_score
+	score_changed.emit(current_score)
+	
+	# Check for new high score
+	if current_score > highscore:
+		highscore = current_score
+		save_highscore()
+		highscore_changed.emit(highscore)
+		print("NEW HIGH SCORE: ", highscore)
+	
+	print("Collectible points added: ", points, " | Total score: ", current_score)
+
 # Combo System Functions
 func on_duck_jump() -> void:
 	# Increment combo count

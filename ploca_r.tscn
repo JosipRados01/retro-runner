@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://dnpjmarccik0b"]
+
+[ext_resource type="Texture2D" uid="uid://bqvmt3x48gca" path="res://img/ploca_red.png" id="1_rteqo"]
+[ext_resource type="Script" uid="uid://d3knxf4hluhx5" path="res://ploca_r.gd" id="2_ploca_r_gd"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cgbmm"]
+radius = 31.0161
+
+[node name="ploca_red" type="Node2D"]
+script = ExtResource("2_ploca_r_gd")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_cgbmm")
+
+[node name="PlocaRed" type="Sprite2D" parent="Area2D"]
+position = Vector2(-1, 0)
+texture = ExtResource("1_rteqo")
