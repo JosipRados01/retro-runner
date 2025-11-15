@@ -20,6 +20,11 @@ func _on_body_entered(body: Node2D) -> void:
 		# Trigger splash particles
 		%splash.emitting = true
 		
+		# Play bounce sound effect with pitch variety
+		if has_node("bounce_sfx"):
+			$bounce_sfx.pitch_scale = randf_range(0.8, 1.2)
+			$bounce_sfx.play()
+		
 		# Trigger screenshake for stomp
 		if player.has_method("trigger_stomp_shake"):
 			player.trigger_stomp_shake()

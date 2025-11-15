@@ -112,6 +112,9 @@ func turn_off_tv():
 	# Turn off both TV sprites (black screen)
 	tv_on.visible = false
 	tv_off.visible = false
+	
+	# Start the persistent music
+	MusicManager.start_music()
 
 func setup_bouncing_logo():
 	# Remove existing logo if it exists

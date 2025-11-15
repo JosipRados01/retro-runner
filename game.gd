@@ -174,6 +174,10 @@ func cleanup_old_sections(player_x: float):
 
 func player_died():
 	print("Player died! Final score: ", ScoreSystem.get_score())
+	
+	# Play death sound effect through music manager
+	MusicManager.play_death_sound()
+	
 	reset_game()
 
 func reset_game():

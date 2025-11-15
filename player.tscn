@@ -1,9 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://ckt8gji3nlcye"]
+[gd_scene load_steps=19 format=3 uid="uid://ckt8gji3nlcye"]
 
 [ext_resource type="Script" uid="uid://8xa6rga0cc7l" path="res://player.gd" id="1_onrkg"]
 [ext_resource type="Texture2D" uid="uid://ccckng3vrfels" path="res://img/player_idle.png" id="2_onrkg"]
 [ext_resource type="Texture2D" uid="uid://67af4hi0b48l" path="res://img/spritesheet.png" id="3_i3pqv"]
 [ext_resource type="Texture2D" uid="uid://bes6616j05uml" path="res://img/jupm_spritesheet.png" id="4_hqtel"]
+[ext_resource type="AudioStream" uid="uid://5qq4fonrqgsf" path="res://sfx/jump.wav" id="5_sweqy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i3pqv"]
 size = Vector2(60, 62)
@@ -152,3 +153,7 @@ unique_name_in_owner = true
 visible = false
 position = Vector2(0, -34)
 sprite_frames = SubResource("SpriteFrames_ivps1")
+
+[node name="jump_sfx" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_sweqy")
+volume_db = -10.0

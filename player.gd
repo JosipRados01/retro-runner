@@ -140,6 +140,11 @@ func handle_jump(delta: float) -> void:
 		if has_node("JumpParticle"):
 			$JumpParticle.emitting = true
 		
+		# Play jump sound effect with pitch variety
+		if has_node("jump_sfx"):
+			$jump_sfx.pitch_scale = randf_range(0.9, 1.1)
+			$jump_sfx.play()
+		
 		print("Jump started with velocity: ", velocity.y)
 	
 	# Track jump time while button is held
