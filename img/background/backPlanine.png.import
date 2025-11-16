@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dontu4ub0yey7"
-path="res://.godot/imported/bad_road.png-595352b96f47954956dd557a61185d1e.ctex"
+uid="uid://w7ns7wbj4cmv"
+path="res://.godot/imported/backPlanine.png-4a09497172600b758a064df9e0cf4408.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://img/background/bad_road.png"
-dest_files=["res://.godot/imported/bad_road.png-595352b96f47954956dd557a61185d1e.ctex"]
+source_file="res://img/background/backPlanine.png"
+dest_files=["res://.godot/imported/backPlanine.png-4a09497172600b758a064df9e0cf4408.ctex"]
 
 [params]
 

@@ -38,6 +38,9 @@ func _ready() -> void:
 	tv_off.visible = true
 	is_tv_on = false
 	
+	# Start radio static sound
+	MusicManager.play_static()
+	
 	# Set up zoom animation
 	initial_scale = tv_on.scale  # Both sprites should have the same initial scale
 	target_scale = initial_scale * 1.9

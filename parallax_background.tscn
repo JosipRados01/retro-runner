@@ -1,22 +1,38 @@
-[gd_scene load_steps=5 format=3 uid="uid://tdrxyfe7tsyc"]
+[gd_scene load_steps=9 format=3 uid="uid://tdrxyfe7tsyc"]
 
 [ext_resource type="Texture2D" uid="uid://e0w75a2imcg" path="res://img/background/blueSky.png" id="1_2pwms"]
 [ext_resource type="Texture2D" uid="uid://b0kbglb6ijwig" path="res://img/background/backBuildings.png" id="1_6h8ff"]
+[ext_resource type="Script" uid="uid://bhiydkgi8f2h5" path="res://parallax_background.gd" id="1_bg_script"]
+[ext_resource type="Texture2D" uid="uid://dd60ofkbqfai" path="res://img/background/orangeSky.png" id="1_xoild"]
 [ext_resource type="Texture2D" uid="uid://cx3svf32nvl1v" path="res://img/background/midBuildings.png" id="2_2pwms"]
+[ext_resource type="Texture2D" uid="uid://w7ns7wbj4cmv" path="res://img/background/backPlanine.png" id="3_kwhg4"]
 [ext_resource type="Texture2D" uid="uid://bvil7fd6vn8o5" path="res://img/background/frontBuildings.png" id="3_xoild"]
+[ext_resource type="Texture2D" uid="uid://bx5it67nc28mr" path="res://img/background/midPlanine.png" id="5_hy12d"]
 
 [node name="ParallaxBackground" type="ParallaxBackground"]
+script = ExtResource("1_bg_script")
 
 [node name="sky" type="ParallaxLayer" parent="."]
 scale = Vector2(1.5, 1.5)
 motion_scale = Vector2(0.05, 0.05)
 motion_mirroring = Vector2(1350, 0)
 
+[node name="orangeSky" type="Sprite2D" parent="sky"]
+texture = ExtResource("1_xoild")
+centered = false
+
+[node name="orangeSky2" type="Sprite2D" parent="sky"]
+position = Vector2(900, 0)
+texture = ExtResource("1_xoild")
+centered = false
+
 [node name="BlueSky" type="Sprite2D" parent="sky"]
+visible = false
 texture = ExtResource("1_2pwms")
 centered = false
 
 [node name="BlueSky2" type="Sprite2D" parent="sky"]
+visible = false
 position = Vector2(900, 0)
 texture = ExtResource("1_2pwms")
 centered = false
@@ -28,11 +44,22 @@ motion_scale = Vector2(0.1, 0.5)
 motion_offset = Vector2(0, 100)
 motion_mirroring = Vector2(1350, 0)
 
+[node name="BackPlanine" type="Sprite2D" parent="Backlayer"]
+texture = ExtResource("3_kwhg4")
+centered = false
+
+[node name="BackPlanine2" type="Sprite2D" parent="Backlayer"]
+position = Vector2(900, 0)
+texture = ExtResource("3_kwhg4")
+centered = false
+
 [node name="BackBuildings" type="Sprite2D" parent="Backlayer"]
+visible = false
 texture = ExtResource("1_6h8ff")
 centered = false
 
 [node name="BackBuildings2" type="Sprite2D" parent="Backlayer"]
+visible = false
 position = Vector2(900, 0)
 texture = ExtResource("1_6h8ff")
 centered = false
@@ -43,11 +70,22 @@ motion_scale = Vector2(0.3, 1)
 motion_offset = Vector2(0, 200)
 motion_mirroring = Vector2(1350, 0)
 
+[node name="midPlanine" type="Sprite2D" parent="MidLayer"]
+texture = ExtResource("5_hy12d")
+centered = false
+
+[node name="Midplanine2" type="Sprite2D" parent="MidLayer"]
+position = Vector2(900, 0)
+texture = ExtResource("5_hy12d")
+centered = false
+
 [node name="MidBuildings" type="Sprite2D" parent="MidLayer"]
+visible = false
 texture = ExtResource("2_2pwms")
 centered = false
 
 [node name="MidBuildings2" type="Sprite2D" parent="MidLayer"]
+visible = false
 position = Vector2(900, 0)
 texture = ExtResource("2_2pwms")
 centered = false

@@ -104,7 +104,7 @@ func _physics_process(delta: float) -> void:
 		if Input.is_action_pressed("stomp"):
 			direction = handle_stomp_input()
 			update_animation_speed(false)  # Not running fast
-		elif Input.is_action_pressed("jump"):
+		elif Input.is_action_pressed("speed_up"):
 			direction = 1.5  # Speed boost
 			update_animation_speed(true)   # Running fast
 		else:
@@ -112,9 +112,9 @@ func _physics_process(delta: float) -> void:
 	else:
 		# Manual movement (original behavior)
 		var stomp_input = -1.0 if Input.is_action_pressed("stomp") else 0.0
-		var speed_input = 1.0 if Input.is_action_pressed("jump") else 0.0
+		var speed_input = 1.0 if Input.is_action_pressed("speed_up") else 0.0
 		direction = stomp_input + speed_input
-		update_animation_speed(Input.is_action_pressed("jump"))  # Running fast if jump pressed
+		update_animation_speed(Input.is_action_pressed("speed_up"))  # Running fast if speed_up pressed
 	
 	if direction != 0:
 		velocity.x = direction * SPEED
@@ -321,8 +321,8 @@ func trigger_stomp_shake():
 	add_screenshake(5.0, 0.2)  # Stronger shake for stomp
 
 func handle_run_particles():
-	# Handle run particles - emit while holding jump input (speed boost)
-	var should_emit_run_particles = Input.is_action_pressed("jump")
+	# Handle run particles - emit while holding speed_up input (speed boost)
+	var should_emit_run_particles = Input.is_action_pressed("speed_up")
 	
 	if has_node("runParticle"):
 		var run_particle = $runParticle
