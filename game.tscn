@@ -19,8 +19,9 @@ offset_right = 736.0
 offset_bottom = 523.0
 theme_override_fonts/font = ExtResource("9_vef74")
 theme_override_font_sizes/font_size = 30
-text = "Space - Jump & Boost
-Down - Stomp"
+text = "Space - Jump
+Right arrow - Boost
+Down arrow - Stomp"
 
 [node name="ParallaxBackground" parent="." instance=ExtResource("4_fc0e3")]
 
